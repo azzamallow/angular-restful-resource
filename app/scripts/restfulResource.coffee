@@ -1,16 +1,18 @@
 'use strict'
 
-angular.module 'restfulResource', []
+angular.module 'restfulResource', ['ngResource']
 
 angular.module('restfulResource')
-  .factory 'restfulResource', ->
-    # Service logic
-    # ...
+  .factory 'restfulResource', ($resource) ->
+    extend = (from, to) ->
+      for key, value of to
+        from[key] = value
+      from
 
-    meaningOfLife = 42
+    defaultActions = 
+      update:
+        method: 'PUT'
 
-    # Public API here
-    {
-      someMethod: ->
-        meaningOfLife
-    }
+    (url, paramDefaults, actions) ->
+      actions = extend defaultActions, actions
+      $resource url, paramDefaults, actions
