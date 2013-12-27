@@ -25,19 +25,18 @@ angular.module('myApp', [
 Define your resource as you would with $resource
 
 ```
-'use strict'
+'use strict';
 
 angular.module('myApp')
-  .factory 'Listing', (restfulResource) ->
-    restfulResource "/listing/:id", id: '@id'
+  .factory('Listing', function(restfulResource) {
+    return restfulResource("/listing/:id", { id: '@id' });
+});
 ```
 
 Now you can invoke an update which will perform a PUT
 
 ```
 listing = Listing.get({id: 1});
-
 // ... change listing
-
-listing.$update()
+listing.$update();
 ```
